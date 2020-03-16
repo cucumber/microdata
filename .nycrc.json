@@ -1,0 +1,15 @@
+{
+  "extension": [
+    ".ts"
+  ],
+  "exclude": [
+    "coverage",
+    "dist",
+    "src/**/*.d.ts"
+  ],
+  "reporter": [
+    "html",
+    "text"
+  ],
+  "all": true  
+}
