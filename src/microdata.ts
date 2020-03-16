@@ -40,9 +40,14 @@ function add(microdata: any, key: string, value: any) {
 function value(element: Element) {
   if (element.getAttribute('itemscope') !== null) return extract(element)
   const attributeName = lookup[element.tagName.toLowerCase()]
-  const stringValue = attributeName
+  const rawStringValue = attributeName
     ? element.getAttribute(attributeName)
     : element.textContent
+  const stringValue = rawStringValue
+    .trim()
+    .split(/\n/)
+    .map(s => s.trim())
+    .join(' ')
   const itemType = element.getAttribute('itemtype')
   switch (itemType) {
     case null:
