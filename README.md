@@ -6,22 +6,49 @@ This can be used to extract "interesting" pieces of information from a DOM annot
 [Microdata](https://html.spec.whatwg.org/multipage/microdata.html) attributes, such as
 `itemscope`, `itemtype` and `itemprop`.
 
+The library supports [all types](https://schema.org/docs/full.html) from [schema.org](https://schema.org/).
+
 ## Example
 
 Given a sample DOM:
 
 ```html
 <!DOCTYPE html>
-<div itemscope itemtype="http://schema.org/Event">
-  <div>
-    Maximum attendees: <span itemprop="maximumAttendeeCapacity" itemtype="http://schema.org/Integer">35</span>.
-  </div>
+<div itemscope itemtype="http://schema.org/Person">
+  <span itemprop="name">Jane Doe</span>
 </div>
 ```
 
-We can convert it to a JavaScript object:
+We can extract the `Person` on that page to a [JSON-LD](https://json-ld.org/) compliant JavaScript object:
 
 ```javascript
-const event = microdata('http://schema.org/Event', document)
-console.log(event.maximumAttendeeCapacity); // 35
+const { microdata } = require('@cucumber/microdata')
+const { Person } = require('schema-dts')
+
+const person = microdata('http://schema.org/Person', document)
+console.log(person.name) // "Jane Doe"
+```
+
+If you are using TypeScript you can cast the result to a type from [schema-dts](https://github.com/google/schema-dts):
+
+```typescript
+import { microdata } from '@cucumber/microdata'
+import { Person } from 'schema-dts'
+
+const person = microdata('http://schema.org/ItemList', document) as Person
+console.log(person.name) // "Jane Doe"
+```
+
+## Usage in testing
+
+This library can be used to write assertions against web pages.
+It works with any UI library as it only inspects the DOM. The only requirement
+is that the HTML has Microdata in it.
+
+Here is an example from a hypothetical TODO list application:
+
+```typescript
+const itemList = microdata('http://schema.org/ItemList', element) as ItemList
+const todos = itemList.itemListElement as Text[]
+assert.deepStrictEqual(todos, ['Get milk', 'Feed dog'])
 ```
