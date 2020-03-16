@@ -52,3 +52,8 @@ const itemList = microdata('http://schema.org/ItemList', element) as ItemList
 const todos = itemList.itemListElement as Text[]
 assert.deepStrictEqual(todos, ['Get milk', 'Feed dog'])
 ```
+
+## Credit
+
+This library is based on the excellent, but abandoned [microdata](https://github.com/nathan7/microdata). It's been ported to TypeScript, and some bug fixes have
+been applied to make it compliant with JSON-LD.
