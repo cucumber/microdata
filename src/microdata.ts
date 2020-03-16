@@ -1,11 +1,14 @@
-export function microdataAll(itemtype: string, scope: Element) {
+export function microdataAll<T>(
+  itemtype: string,
+  scope: Element
+): ReadonlyArray<T> {
   const itemScopes = scope.querySelectorAll(
     `[itemscope][itemtype="${itemtype}"]`
   )
   return [...itemScopes].map(extract)
 }
 
-export function microdata(itemtype: string, scope: Element) {
+export function microdata<T>(itemtype: string, scope: Element): T {
   const itemScope = scope.querySelector(`[itemscope][itemtype="${itemtype}"]`)
   return itemScope === null ? null : extract(itemScope)
 }

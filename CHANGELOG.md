@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [1.1.0] - 2019-08-29
+
+### Changed
+
+* `microdata` and `microdataAll` return generic types
+
 ## [1.0.1] - 2019-08-29
 
 ### Fixed
@@ -30,7 +36,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * First release
 
 <!-- Releases -->
-[Unreleased]: https://github.com/cucumber/microdata/compare/v1.0.0...master
+[Unreleased]: https://github.com/cucumber/microdata/compare/v1.1.0...master
+[1.1.0]:      https://github.com/cucumber/microdata/compare/v1.0.1...v1.1.0
 [1.0.1]:      https://github.com/cucumber/microdata/compare/v1.0.0...v1.0.1
 [1.0.0]:      https://github.com/cucumber/microdata/releases/tag/v1.0.0
 
