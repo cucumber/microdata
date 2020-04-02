@@ -1,20 +1,25 @@
 export function microdataAll<T>(
   itemtype: string,
-  scope: Element
+  scope: Element,
+  extractValue: ExtractValue = () => undefined
 ): ReadonlyArray<T> {
   const itemScopes = scope.querySelectorAll(
     `[itemscope][itemtype="${itemtype}"]`
   )
-  return [...itemScopes].map(extract)
+  return [...itemScopes].map(scope => extract(scope, extractValue))
 }
 
-export function microdata<T>(itemtype: string, scope: Element): T {
+export function microdata<T>(
+  itemtype: string,
+  scope: Element,
+  extractValue: ExtractValue = () => undefined
+): T {
   const itemScope = scope.querySelector(`[itemscope][itemtype="${itemtype}"]`)
-  return itemScope === null ? null : extract(itemScope)
+  return itemScope === null ? null : extract(itemScope, extractValue)
 }
 
-function extract(scope: Element): any {
-  const itemType = scope.getAttribute('itemtype')!
+function extract(scope: Element, extractValue: ExtractValue): any {
+  const itemType = scope.getAttribute('itemtype')
   const microdata = { '@type': new URL(itemType).pathname.slice(1) }
   const children = [...scope.children]
   let child: Element | undefined = undefined
@@ -22,7 +27,7 @@ function extract(scope: Element): any {
   while ((child = children.shift())) {
     const key = child.getAttribute('itemprop')
     if (key) {
-      add(microdata, key, value(child))
+      add(microdata, key, value(child, extractValue))
     }
     if (child.getAttribute('itemscope') === null)
       prepend(children, child.children)
@@ -40,12 +45,14 @@ function add(microdata: any, key: string, value: any) {
   else microdata[key] = [prop, value]
 }
 
-function value(element: Element) {
-  if (element.getAttribute('itemscope') !== null) return extract(element)
-  const attributeName = lookup[element.tagName.toLowerCase()]
-  const rawStringValue = attributeName
-    ? element.getAttribute(attributeName)
-    : element.textContent
+function value(element: Element, extractValue: ExtractValue) {
+  if (element.getAttribute('itemscope') !== null) {
+    return extract(element, extractValue)
+  }
+  const attributeName = attributeNameByTagName[element.tagName.toLowerCase()]
+  const rawStringValue =
+    extractValue(element) ||
+    (attributeName ? element.getAttribute(attributeName) : element.textContent)
   const stringValue = rawStringValue
     .trim()
     .split(/\n/)
@@ -74,7 +81,7 @@ function prepend(target: Element[], addition: HTMLCollection) {
   ;[].unshift.apply(target, [].slice.call(addition))
 }
 
-const lookup: { [key: string]: string } = {
+const attributeNameByTagName: { [key: string]: string } = {
   meta: 'content',
   audio: 'src',
   embed: 'src',
@@ -88,3 +95,5 @@ const lookup: { [key: string]: string } = {
   object: 'data',
   time: 'datetime',
 }
+
+type ExtractValue = (element: Element) => string | undefined

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* An optional `(element: Element) => string | undefined` function can be passed as the last argument to
+  provide a custom function to look up element values. This is useful for extracting values from non-standard
+  elements, such as a [CodeMirror](https://codemirror.net/) editor.
+
 ### Changed
 
 ### Deprecated

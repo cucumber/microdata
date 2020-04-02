@@ -39,6 +39,29 @@ const person = microdata('http://schema.org/ItemList', document) as Person
 console.log(person.name) // "Jane Doe"
 ```
 
+## Custom value extraction
+
+In some cases you may want finer grained control over how values are extracted from the DOM. For example,
+you may have a [CodeMirror](https://codemirror.net/) editor sitting inside of an element:
+
+```html
+<div itemtype="http://schema.org/Text">
+  <!-- CodeMirror here -->
+</div>
+``` 
+
+You can pass a custom `extractValue` function as the last argument to `microdata` or `microdataAll`:
+
+```typescript
+const data = microdata(
+  someSchemaType, 
+  someElement,
+  element => element.querySelector('.CodeMirror')?.CodeMirror?.getValue()
+)
+```
+
+This function may return `undefined`. In that case, the default lookup mechanisms will be used.
+
 ## Usage in testing
 
 This library can be used to write assertions against web pages.
