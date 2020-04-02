@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/cucumber/microdata/workflows/Node.js%20CI/badge.svg)
+
 # Microdata
 
 This module converts a DOM to Microdata in [JSON-LD](https://json-ld.org/) format.
