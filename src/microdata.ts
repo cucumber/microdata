@@ -20,6 +20,11 @@ export function microdata<T>(
 
 function extract(scope: Element, extractValue: ExtractValue): any {
   const itemType = scope.getAttribute('itemtype')
+
+  if (itemType === null) {
+    throw new Error(`Missing itemtype on element ${scope.outerHTML}`)
+  }
+
   const microdata = { '@type': new URL(itemType).pathname.slice(1) }
   const children = [...scope.children]
   let child: Element | undefined = undefined
@@ -69,11 +74,8 @@ function value(element: Element, extractValue: ExtractValue) {
     case 'http://schema.org/Boolean':
       return Boolean(stringValue)
     default:
-      console.log(element.outerHTML)
       throw new Error(
-        `Unable to parse element with itemtype '${itemType}' (itemprop="${element.getAttribute(
-          'itemprop'
-        )}")`
+        `Unable to extract value. Change itemtype to a primitive type or add itemscope on element ${element.outerHTML}`
       )
   }
 }

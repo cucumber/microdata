@@ -1,7 +1,13 @@
 import { JSDOM } from 'jsdom'
 import { microdata } from '../src/microdata'
-import { Event, ItemList, Person } from 'schema-dts'
+import { Event, ItemList, Person, Text, Thing } from 'schema-dts'
 import assert from 'assert'
+
+type Tree = Thing & {
+  '@type': 'Tree'
+  value: Text
+  children?: ItemList
+}
 
 describe('microdata', () => {
   it('converts primitive types', () => {
@@ -23,21 +29,21 @@ describe('microdata', () => {
   it('creates a nested list', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
 <ol>
-    <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+    <li itemscope itemtype="http://schema.cucumber.io/Tree">
         <span itemprop="value" itemtype="http://schema.org/Text">Europe</span>
-        <ol itemscope itemprop="children" itemtype="http://schema.org/ItemList">
-            <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+        <ol itemscope itemtype="http://schema.cucumber.io/TreeList">
+            <li itemscope itemprop="children" itemtype="http://schema.cucumber.io/Tree">
                 <span itemprop="value" itemtype="http://schema.org/Text">France</span>
-                <ol itemscope itemprop="children" itemtype="http://schema.org/ItemList">
-                    <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+                <ol itemscope itemtype="http://schema.cucumber.io/TreeList">
+                    <li itemscope itemprop="children" itemtype="http://schema.cucumber.io/Tree">
                         <span itemprop="value" itemtype="http://schema.org/Text">Toulouse</span>
                     </li>
-                    <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+                    <li itemscope itemprop="children"  itemtype="http://schema.cucumber.io/Tree">
                         <span itemprop="value" itemtype="http://schema.org/Text">Paris</span>
                     </li>
                 </ol>
             </li>
-            <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+            <li itemscope itemprop="children" itemtype="http://schema.cucumber.io/Tree">
                 <span itemprop="value" itemtype="http://schema.org/Text">Spain</span>
             </li>
         </ol>
@@ -45,7 +51,7 @@ describe('microdata', () => {
 </ol>
     `)
 
-    const expected: ItemList = { '@type': 'ItemList', itemListElement: [] }
+    const expected = {}
     assert.deepStrictEqual(
       microdata(
         'http://schema.cucumber.io/Tree',
