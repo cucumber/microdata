@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 import { microdata } from '../src/microdata'
-import { Event, Person } from 'schema-dts'
+import { Event, ItemList, Person } from 'schema-dts'
 import assert from 'assert'
 
 describe('microdata', () => {
@@ -18,6 +18,38 @@ describe('microdata', () => {
     )
 
     assert.strictEqual(event.maximumAttendeeCapacity, 35)
+  })
+
+  it('creates a nested list', () => {
+    const dom = new JSDOM(`<!DOCTYPE html>
+    <ol itemscope itemtype="http://schema.org/ItemList">
+        <li>
+            <span>World</span>
+            <ol>
+                <li>
+                    <span>Europe</span>
+                    <ol>
+                        <li>
+                            <span>France</span>
+                        </li>
+                        <li>
+                            <span>Spain</span>
+                        </li>
+                      </ol>
+                </li>
+            </ol>
+        </li>
+    </ol>
+    `)
+
+    const expected: ItemList = { '@type': 'ItemList', itemListElement: [] }
+    assert.deepStrictEqual(
+      microdata(
+        'http://schema.org/ItemList',
+        dom.window.document.documentElement
+      ),
+      expected
+    )
   })
 
   it('can use a custom function to look up value from element', () => {
