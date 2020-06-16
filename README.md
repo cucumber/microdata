@@ -64,6 +64,13 @@ const data = microdata(
 
 This function may return `undefined`. In that case, the default lookup mechanisms will be used.
 
+## Custome types
+
+We recommend using the official types defined by schema.org if you can. Sometimes however, you may want to
+define your own types if the official types are insufficient.
+
+You can see an example of how this is done in [test/microdataTest.ts](test/microdataTest.ts).
+
 ## Usage in testing
 
 This library can be used to write assertions against web pages.

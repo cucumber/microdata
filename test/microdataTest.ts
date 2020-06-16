@@ -1,12 +1,17 @@
 import { JSDOM } from 'jsdom'
 import { microdata } from '../src/microdata'
-import { Event, ItemList, Person, Text, Thing } from 'schema-dts'
+import { Event, Person, Text } from 'schema-dts'
 import assert from 'assert'
 
-type Tree = Thing & {
+type Tree = {
   '@type': 'Tree'
   value: Text
-  children?: ItemList
+  children?: TreeList
+}
+
+type TreeList = {
+  '@type': 'TreeList'
+  treeListElement: Tree | Tree[]
 }
 
 describe('microdata', () => {
@@ -26,24 +31,24 @@ describe('microdata', () => {
     assert.strictEqual(event.maximumAttendeeCapacity, 35)
   })
 
-  it('creates a nested list', () => {
+  it('creates a Tree using custom types', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
 <ol>
-    <li itemscope itemtype="http://schema.cucumber.io/Tree">
+    <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
         <span itemprop="value" itemtype="http://schema.org/Text">Europe</span>
-        <ol itemscope itemtype="http://schema.cucumber.io/TreeList">
-            <li itemscope itemprop="children" itemtype="http://schema.cucumber.io/Tree">
+        <ol itemscope itemprop="children" itemtype="http://schema.cucumber.io/TreeList">
+            <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
                 <span itemprop="value" itemtype="http://schema.org/Text">France</span>
-                <ol itemscope itemtype="http://schema.cucumber.io/TreeList">
-                    <li itemscope itemprop="children" itemtype="http://schema.cucumber.io/Tree">
+                <ol itemscope itemprop="children" itemtype="http://schema.cucumber.io/TreeList">
+                    <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
                         <span itemprop="value" itemtype="http://schema.org/Text">Toulouse</span>
                     </li>
-                    <li itemscope itemprop="children"  itemtype="http://schema.cucumber.io/Tree">
+                    <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
                         <span itemprop="value" itemtype="http://schema.org/Text">Paris</span>
                     </li>
                 </ol>
             </li>
-            <li itemscope itemprop="children" itemtype="http://schema.cucumber.io/Tree">
+            <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
                 <span itemprop="value" itemtype="http://schema.org/Text">Spain</span>
             </li>
         </ol>
@@ -51,7 +56,37 @@ describe('microdata', () => {
 </ol>
     `)
 
-    const expected = {}
+    const expected: Tree = {
+      '@type': 'Tree',
+      children: {
+        '@type': 'TreeList',
+        treeListElement: [
+          {
+            '@type': 'Tree',
+            children: {
+              '@type': 'TreeList',
+              treeListElement: [
+                {
+                  '@type': 'Tree',
+                  value: 'Toulouse',
+                },
+                {
+                  '@type': 'Tree',
+                  value: 'Paris',
+                },
+              ],
+            },
+            value: 'France',
+          },
+          {
+            '@type': 'Tree',
+            value: 'Spain',
+          },
+        ],
+      },
+      value: 'Europe',
+    }
+
     assert.deepStrictEqual(
       microdata(
         'http://schema.cucumber.io/Tree',
