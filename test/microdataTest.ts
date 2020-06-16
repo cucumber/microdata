@@ -22,30 +22,33 @@ describe('microdata', () => {
 
   it('creates a nested list', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
-    <ol itemscope itemtype="http://schema.org/ItemList">
-        <li>
-            <span>World</span>
-            <ol>
-                <li>
-                    <span>Europe</span>
-                    <ol>
-                        <li>
-                            <span>France</span>
-                        </li>
-                        <li>
-                            <span>Spain</span>
-                        </li>
-                      </ol>
-                </li>
-            </ol>
-        </li>
-    </ol>
+<ol>
+    <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+        <span itemprop="value" itemtype="http://schema.org/Text">Europe</span>
+        <ol itemscope itemprop="children" itemtype="http://schema.org/ItemList">
+            <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+                <span itemprop="value" itemtype="http://schema.org/Text">France</span>
+                <ol itemscope itemprop="children" itemtype="http://schema.org/ItemList">
+                    <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+                        <span itemprop="value" itemtype="http://schema.org/Text">Toulouse</span>
+                    </li>
+                    <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+                        <span itemprop="value" itemtype="http://schema.org/Text">Paris</span>
+                    </li>
+                </ol>
+            </li>
+            <li itemscope itemprop="itemListElement" itemtype="http://schema.cucumber.io/Tree">
+                <span itemprop="value" itemtype="http://schema.org/Text">Spain</span>
+            </li>
+        </ol>
+    </li>
+</ol>
     `)
 
     const expected: ItemList = { '@type': 'ItemList', itemListElement: [] }
     assert.deepStrictEqual(
       microdata(
-        'http://schema.org/ItemList',
+        'http://schema.cucumber.io/Tree',
         dom.window.document.documentElement
       ),
       expected

@@ -69,6 +69,7 @@ function value(element: Element, extractValue: ExtractValue) {
     case 'http://schema.org/Boolean':
       return Boolean(stringValue)
     default:
+      console.log(element.outerHTML)
       throw new Error(
         `Unable to parse element with itemtype '${itemType}' (itemprop="${element.getAttribute(
           'itemprop'
