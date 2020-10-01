@@ -25,7 +25,6 @@ We can extract the `Person` on that page to a [JSON-LD](https://json-ld.org/) co
 
 ```javascript
 const { microdata } = require('@cucumber/microdata')
-const { Person } = require('schema-dts')
 
 const person = microdata('http://schema.org/Person', document)
 console.log(person.name) // "Jane Doe"
