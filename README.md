@@ -36,7 +36,7 @@ If you are using TypeScript you can cast the result to a type from [schema-dts](
 import { microdata } from '@cucumber/microdata'
 import { Person } from 'schema-dts'
 
-const person = microdata('http://schema.org/ItemList', document) as Person
+const person = microdata('http://schema.org/Person', document) as Person
 console.log(person.name) // "Jane Doe"
 ```
 
