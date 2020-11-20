@@ -68,10 +68,21 @@ function value(element: Element, extractValue: ExtractValue) {
     case null:
       return stringValue
     case 'http://schema.org/Text':
+    case 'http://schema.org/DateTime':
+    case 'http://schema.org/Date':
+    case 'http://schema.org/Time':
+    case 'http://schema.org/CssSelectorType':
+    case 'http://schema.org/PronounceableText':
+    case 'http://schema.org/URL':
+    case 'http://schema.org/XPathType':
       return stringValue
+    case 'http://schema.org/Number':
+    case 'http://schema.org/Float':
     case 'http://schema.org/Integer':
       return Number(stringValue)
     case 'http://schema.org/Boolean':
+    case 'http://schema.org/False':
+    case 'http://schema.org/True':
       return Boolean(stringValue)
     default:
       throw new Error(

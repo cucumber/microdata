@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 import { microdata } from '../src/microdata'
-import { Event, Person, Text } from 'schema-dts'
+import {CreativeWork, Event, Person, Text } from 'schema-dts'
 import assert from 'assert'
 
 type Tree = {
@@ -29,6 +29,23 @@ describe('microdata', () => {
     )
 
     assert.strictEqual(event.maximumAttendeeCapacity, 35)
+    assert.strictEqual(event.startDate, 35)
+  })
+
+  it('converts objects with dates', () => {
+    const dom = new JSDOM(`<!DOCTYPE html>
+    <div itemscope itemtype="http://schema.org/CreativeWork">
+        <div>
+            Maximum attendees: <span itemprop="dateCreated" itemtype="http://schema.org/DateTime">2020-11-20T11:15:52.927Z</span>.
+        </div>
+    </div>
+    `)
+    const creativeWork: CreativeWork = microdata(
+      'http://schema.org/CreativeWork',
+      dom.window.document.documentElement
+    )
+
+    assert.strictEqual(creativeWork.dateCreated, '2020-11-20T11:15:52.927Z')
   })
 
   it('creates a Tree using custom types', () => {
