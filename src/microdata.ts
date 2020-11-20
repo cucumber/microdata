@@ -6,7 +6,7 @@ export function microdataAll<T>(
   const itemScopes = scope.querySelectorAll(
     `[itemscope][itemtype="${itemtype}"]`
   )
-  return [...itemScopes].map(scope => extract(scope, extractValue))
+  return [...itemScopes].map((scope) => extract(scope, extractValue))
 }
 
 export function microdata<T>(
@@ -61,7 +61,7 @@ function value(element: Element, extractValue: ExtractValue) {
   const stringValue = rawStringValue
     .trim()
     .split(/\n/)
-    .map(s => s.trim())
+    .map((s) => s.trim())
     .join(' ')
   const itemType = element.getAttribute('itemtype')
   switch (itemType) {

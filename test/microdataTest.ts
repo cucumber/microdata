@@ -106,16 +106,15 @@ describe('microdata', () => {
   <span itemprop="familyName" itemtype="http://schema.org/Text">Hellesøy</span>
 </div>
 `)
-    // @ts-ignore
-    const { givenName, familyName } = microdata<Person>(
+    const person = microdata<Person>(
       'http://schema.org/Person',
       dom.window.document.documentElement,
-      element => element.querySelector('.use-this')?.textContent
+      (element) => element.querySelector('.use-this')?.textContent
     )
 
-    assert.deepStrictEqual(
-      { givenName, familyName },
-      { givenName: 'Aslak', familyName: 'Hellesøy' }
-    )
+    if (typeof person === 'string') throw new Error('Expected a Person object')
+
+    assert.deepStrictEqual(person.givenName, 'Aslak')
+    assert.deepStrictEqual(person.familyName, 'Hellesøy')
   })
 })
