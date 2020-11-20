@@ -2,13 +2,15 @@
 
 # Microdata
 
-This module converts a DOM to Microdata in [JSON-LD](https://json-ld.org/) format.
+This module converts a DOM to [Microdata](https://html.spec.whatwg.org/multipage/microdata.html).
 
-This can be used to extract "interesting" pieces of information from a DOM annotated with
-[Microdata](https://html.spec.whatwg.org/multipage/microdata.html) attributes, such as
-`itemscope`, `itemtype` and `itemprop`.
+It can be used to extract "interesting" pieces of information from a DOM, such as [Person](https://schema.org/Person),
+[Order](https://schema.org/Order), [MusicEvent](https://schema.org/MusicEvent) etc.
+ 
+All you need to do is to add the appropriate `itemscope`, `itemtype` and `itemprop` attributes to your HTML, and this library
+will be able to extract the data.
 
-The library supports [all types](https://schema.org/docs/full.html) from [schema.org](https://schema.org/).
+The library supports [all schema.org types](https://schema.org/docs/full.html) and returns results in [JSON-LD](https://json-ld.org/) format.
 
 ## Example
 
@@ -37,12 +39,13 @@ import { microdata } from '@cucumber/microdata'
 import { Person } from 'schema-dts'
 
 const person = microdata('http://schema.org/Person', document) as Person
+if (typeof person === 'string') throw new Error('Expected a Person object')
 console.log(person.name) // "Jane Doe"
 ```
 
 ## Custom value extraction
 
-In some cases you may want finer grained control over how values are extracted from the DOM. For example,
+In some cases you may want finer grained control over how to extract values from the DOM. For example,
 you may have a [CodeMirror](https://codemirror.net/) editor sitting inside of an element:
 
 ```html
