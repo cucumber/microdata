@@ -1,6 +1,6 @@
 export function microdataAll<T>(
   itemtype: string,
-  scope: Element,
+  scope: Scope,
   extractValue: ExtractValue = () => undefined
 ): ReadonlyArray<T> {
   const itemScopes = scope.querySelectorAll(
@@ -11,7 +11,7 @@ export function microdataAll<T>(
 
 export function microdata<T>(
   itemtype: string,
-  scope: Element,
+  scope: Scope,
   extractValue: ExtractValue = () => undefined
 ): T {
   const itemScope = scope.querySelector(`[itemscope][itemtype="${itemtype}"]`)
@@ -111,3 +111,4 @@ const attributeNameByTagName: { [key: string]: string } = {
 }
 
 type ExtractValue = (element: Element) => string | undefined
+type Scope = Document | Element
