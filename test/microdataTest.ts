@@ -29,7 +29,6 @@ describe('microdata', () => {
     )
 
     assert.strictEqual(event.maximumAttendeeCapacity, 35)
-    assert.strictEqual(event.startDate, 35)
   })
 
   it('converts objects with dates', () => {
