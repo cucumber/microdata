@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Improve types to accept document as a scope [#8](https://github.com/cucumber/microdata/pull/8)
+
 ### Changed
 
 ### Deprecated
@@ -66,3 +68,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- Contributors in alphabetical order -->
 [aslakhellesoy]:    https://github.com/aslakhellesoy
+[motiejunas]:       https://github.com/motiejunas
