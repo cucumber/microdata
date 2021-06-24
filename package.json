@@ -1,6 +1,6 @@
 {
   "name": "@cucumber/microdata",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Extract WHATWG microdata from a DOM",
   "main": "dist/src/microdata.js",
   "types": "dist/src/microdata.d.ts",
