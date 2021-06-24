@@ -202,9 +202,8 @@ describe('microdata', () => {
         dom.window.document.documentElement
       )
 
-      const dressNames = toArray(breadcrumbList.itemListElement).map(
-        (e: ListItem) => e.name
-      )
+      const dresses = toArray(breadcrumbList.itemListElement) as ListItem[]
+      const dressNames = dresses.map((e: ListItem) => e.name)
       assert.deepStrictEqual(dressNames, [])
     })
   })

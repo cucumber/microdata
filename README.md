@@ -84,6 +84,8 @@ is that the HTML has Microdata in it.
 Here is an example from a hypothetical TODO list application:
 
 ```typescript
+import { microdata } from '@cucumber/microdata'
+
 const itemList = microdata('https://schema.org/ItemList', element) as ItemList
 const todos = itemList.itemListElement as Text[]
 assert.deepStrictEqual(todos, ['Get milk', 'Feed dog'])
@@ -103,8 +105,10 @@ The `toArray` function of this library will convert a value to an array with 0, 
 don't need to worry about this.
 
 ```typescript
+import { microdata, toArray } from '@cucumber/microdata'
+
 const itemList = microdata('https://schema.org/ItemList', element) as ItemList
-const todos = itemList.itemListElement as Text[]
+const todos = toArray(itemList.itemListElement) as Text[]
 assert.deepStrictEqual(todos, ['Get milk', 'Feed dog'])
 ```
 
