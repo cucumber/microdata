@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* Improve types to accept document as a scope [#8](https://github.com/cucumber/microdata/pull/8)
-
 ### Changed
 
 ### Deprecated
@@ -18,6 +16,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 ### Fixed
+
+## [1.5.0]
+
+### Changed
+
+* Primitive types using `itemtype="http://schema.org/Integer"` etc. with `http:` protocol are no longer recognised.
+  Starting with this version it only recognises `itemtype="https://schema.org/Integer"` etc. with `https:` protocol.
+  See [this post](https://stackoverflow.com/questions/55242400/itemtype-with-http-or-better-https) for more details.
+
+### Added
+
+* Added `toArray` utility function to convert children into an array of 0, 1 or more objects
 
 ## [1.4.0]
 
@@ -64,7 +74,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * First release
 
 <!-- Releases -->
-[Unreleased]: https://github.com/cucumber/microdata/compare/v1.4.0...master
+[Unreleased]: https://github.com/cucumber/microdata/compare/v1.5.0...master
+[1.5.0]:      https://github.com/cucumber/microdata/compare/v1.4.0...v1.5.0
 [1.4.0]:      https://github.com/cucumber/microdata/compare/v1.3.0...v1.4.0
 [1.3.0]:      https://github.com/cucumber/microdata/compare/v1.2.1...v1.3.0
 [1.2.1]:      https://github.com/cucumber/microdata/compare/v1.2.0...v1.2.1

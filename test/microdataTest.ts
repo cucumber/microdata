@@ -1,6 +1,13 @@
 import { JSDOM } from 'jsdom'
-import { microdata } from '../src/microdata'
-import {CreativeWork, Event, Person, Text } from 'schema-dts'
+import { microdata, toArray } from '../src/microdata'
+import {
+  BreadcrumbList,
+  CreativeWork,
+  Event,
+  ListItem,
+  Person,
+  Text,
+} from 'schema-dts'
 import assert from 'assert'
 
 type Tree = {
@@ -17,14 +24,14 @@ type TreeList = {
 describe('microdata', () => {
   it('converts primitive types', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
-    <div itemscope itemtype="http://schema.org/Event">
+    <div itemscope itemtype="https://schema.org/Event">
         <div>
-            Maximum attendees: <span itemprop="maximumAttendeeCapacity" itemtype="http://schema.org/Integer">35</span>.
+            Maximum attendees: <span itemprop="maximumAttendeeCapacity" itemtype="https://schema.org/Integer">35</span>.
         </div>
     </div>
     `)
     const event: Event = microdata(
-      'http://schema.org/Event',
+      'https://schema.org/Event',
       dom.window.document.documentElement
     )
 
@@ -33,14 +40,14 @@ describe('microdata', () => {
 
   it('converts objects with dates', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
-    <div itemscope itemtype="http://schema.org/CreativeWork">
+    <div itemscope itemtype="https://schema.org/CreativeWork">
         <div>
-            Maximum attendees: <span itemprop="dateCreated" itemtype="http://schema.org/DateTime">2020-11-20T11:15:52.927Z</span>.
+            Maximum attendees: <span itemprop="dateCreated" itemtype="https://schema.org/DateTime">2020-11-20T11:15:52.927Z</span>.
         </div>
     </div>
     `)
     const creativeWork: CreativeWork = microdata(
-      'http://schema.org/CreativeWork',
+      'https://schema.org/CreativeWork',
       dom.window.document.documentElement
     )
 
@@ -50,22 +57,22 @@ describe('microdata', () => {
   it('creates a Tree using custom types', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
 <ol>
-    <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
-        <span itemprop="value" itemtype="http://schema.org/Text">Europe</span>
-        <ol itemscope itemprop="children" itemtype="http://schema.cucumber.io/TreeList">
-            <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
-                <span itemprop="value" itemtype="http://schema.org/Text">France</span>
-                <ol itemscope itemprop="children" itemtype="http://schema.cucumber.io/TreeList">
-                    <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
-                        <span itemprop="value" itemtype="http://schema.org/Text">Toulouse</span>
+    <li itemscope itemprop="treeListElement" itemtype="https://schema.cucumber.io/Tree">
+        <span itemprop="value" itemtype="https://schema.org/Text">Europe</span>
+        <ol itemscope itemprop="children" itemtype="https://schema.cucumber.io/TreeList">
+            <li itemscope itemprop="treeListElement" itemtype="https://schema.cucumber.io/Tree">
+                <span itemprop="value" itemtype="https://schema.org/Text">France</span>
+                <ol itemscope itemprop="children" itemtype="https://schema.cucumber.io/TreeList">
+                    <li itemscope itemprop="treeListElement" itemtype="https://schema.cucumber.io/Tree">
+                        <span itemprop="value" itemtype="https://schema.org/Text">Toulouse</span>
                     </li>
-                    <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
-                        <span itemprop="value" itemtype="http://schema.org/Text">Paris</span>
+                    <li itemscope itemprop="treeListElement" itemtype="https://schema.cucumber.io/Tree">
+                        <span itemprop="value" itemtype="https://schema.org/Text">Paris</span>
                     </li>
                 </ol>
             </li>
-            <li itemscope itemprop="treeListElement" itemtype="http://schema.cucumber.io/Tree">
-                <span itemprop="value" itemtype="http://schema.org/Text">Spain</span>
+            <li itemscope itemprop="treeListElement" itemtype="https://schema.cucumber.io/Tree">
+                <span itemprop="value" itemtype="https://schema.org/Text">Spain</span>
             </li>
         </ol>
     </li>
@@ -105,7 +112,7 @@ describe('microdata', () => {
 
     assert.deepStrictEqual(
       microdata(
-        'http://schema.cucumber.io/Tree',
+        'https://schema.cucumber.io/Tree',
         dom.window.document.documentElement
       ),
       expected
@@ -114,16 +121,16 @@ describe('microdata', () => {
 
   it('can use a custom function to look up value from element', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
-<div itemscope itemtype="http://schema.org/Person">
-  <div itemprop="givenName" itemtype="http://schema.org/Text">
+<div itemscope itemtype="https://schema.org/Person">
+  <div itemprop="givenName" itemtype="https://schema.org/Text">
     <span>Ignore this</span>
     <span class="use-this">Aslak</span>
   </div>
-  <span itemprop="familyName" itemtype="http://schema.org/Text">Hellesøy</span>
+  <span itemprop="familyName" itemtype="https://schema.org/Text">Hellesøy</span>
 </div>
 `)
     const person = microdata<Person>(
-      'http://schema.org/Person',
+      'https://schema.org/Person',
       dom.window.document.documentElement,
       (element) => element.querySelector('.use-this')?.textContent
     )
@@ -132,5 +139,73 @@ describe('microdata', () => {
 
     assert.deepStrictEqual(person.givenName, 'Aslak')
     assert.deepStrictEqual(person.familyName, 'Hellesøy')
+  })
+
+  describe('toArray', () => {
+    it('converts two children to array with two elements', () => {
+      const dom = new JSDOM(`<!DOCTYPE html>
+<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+  <li itemprop="itemListElement" itemscope
+      itemtype="https://schema.org/ListItem">
+    <a itemprop="item" href="https://example.com/dresses">
+    <span itemprop="name">Dresses</span></a>
+    <meta itemprop="position" content="1" />
+  </li>
+  <li itemprop="itemListElement" itemscope
+      itemtype="https://schema.org/ListItem">
+    <a itemprop="item" href="https://example.com/dresses/real">
+    <span itemprop="name">Real Dresses</span></a>
+    <meta itemprop="position" content="2" />
+  </li>
+</ol>
+`)
+      const breadcrumbList = microdata<BreadcrumbList>(
+        'https://schema.org/BreadcrumbList',
+        dom.window.document.documentElement
+      )
+
+      const dressNames = toArray(breadcrumbList.itemListElement).map(
+        (e: ListItem) => e.name
+      )
+      assert.deepStrictEqual(dressNames, ['Dresses', 'Real Dresses'])
+    })
+
+    it('converts one child to array with one element', () => {
+      const dom = new JSDOM(`<!DOCTYPE html>
+<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+  <li itemprop="itemListElement" itemscope
+      itemtype="https://schema.org/ListItem">
+    <a itemprop="item" href="https://example.com/dresses">
+    <span itemprop="name">Dresses</span></a>
+    <meta itemprop="position" content="1" />
+  </li>
+</ol>
+`)
+      const breadcrumbList = microdata<BreadcrumbList>(
+        'https://schema.org/BreadcrumbList',
+        dom.window.document.documentElement
+      )
+
+      const dressNames = toArray(breadcrumbList.itemListElement).map(
+        (e: ListItem) => e.name
+      )
+      assert.deepStrictEqual(dressNames, ['Dresses'])
+    })
+
+    it('converts no childred to array with zero elements', () => {
+      const dom = new JSDOM(`<!DOCTYPE html>
+<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+</ol>
+`)
+      const breadcrumbList = microdata<BreadcrumbList>(
+        'https://schema.org/BreadcrumbList',
+        dom.window.document.documentElement
+      )
+
+      const dressNames = toArray(breadcrumbList.itemListElement).map(
+        (e: ListItem) => e.name
+      )
+      assert.deepStrictEqual(dressNames, [])
+    })
   })
 })

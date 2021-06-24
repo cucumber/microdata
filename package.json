@@ -13,7 +13,8 @@
     "lint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
     "coverage": "nyc --reporter=html --reporter=text mocha",
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "upgrade": "npm-check-updates --upgrade"
   },
   "devDependencies": {
     "@types/jsdom": "16.2.8",
@@ -28,6 +29,7 @@
     "jsdom": "16.5.1",
     "mocha": "8.3.2",
     "nyc": "15.1.0",
+    "npm-check-updates": "11.7.1",
     "prettier": "2.2.1",
     "schema-dts": "0.8.2",
     "ts-node": "9.1.1",

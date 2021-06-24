@@ -18,6 +18,18 @@ export function microdata<T>(
   return itemScope === null ? null : extract(itemScope, extractValue)
 }
 
+/**
+ * Converts an object to an array
+ * @param o an object, array, null or undefined
+ * @return an array of 0, 1 or more elements
+ */
+export function toArray<T>(
+  o: T | readonly T[] | undefined | null
+): readonly T[] {
+  if (o === null || o === undefined) return []
+  return Array.isArray(o) ? o : [o]
+}
+
 function extract(scope: Element, extractValue: ExtractValue): any {
   const itemType = scope.getAttribute('itemtype')
 
@@ -67,22 +79,22 @@ function value(element: Element, extractValue: ExtractValue) {
   switch (itemType) {
     case null:
       return stringValue
-    case 'http://schema.org/Text':
-    case 'http://schema.org/DateTime':
-    case 'http://schema.org/Date':
-    case 'http://schema.org/Time':
-    case 'http://schema.org/CssSelectorType':
-    case 'http://schema.org/PronounceableText':
-    case 'http://schema.org/URL':
-    case 'http://schema.org/XPathType':
+    case 'https://schema.org/Text':
+    case 'https://schema.org/DateTime':
+    case 'https://schema.org/Date':
+    case 'https://schema.org/Time':
+    case 'https://schema.org/CssSelectorType':
+    case 'https://schema.org/PronounceableText':
+    case 'https://schema.org/URL':
+    case 'https://schema.org/XPathType':
       return stringValue
-    case 'http://schema.org/Number':
-    case 'http://schema.org/Float':
-    case 'http://schema.org/Integer':
+    case 'https://schema.org/Number':
+    case 'https://schema.org/Float':
+    case 'https://schema.org/Integer':
       return Number(stringValue)
-    case 'http://schema.org/Boolean':
-    case 'http://schema.org/False':
-    case 'http://schema.org/True':
+    case 'https://schema.org/Boolean':
+    case 'https://schema.org/False':
+    case 'https://schema.org/True':
       return Boolean(stringValue)
     default:
       throw new Error(
