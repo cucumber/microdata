@@ -2,7 +2,7 @@
 
 # Microdata
 
-This module converts a DOM to [Microdata](https://html.spec.whatwg.org/multipage/microdata.html).
+This library converts a DOM to [Microdata](https://html.spec.whatwg.org/multipage/microdata.html).
 
 It can be used to extract "interesting" pieces of information from a DOM, such as [Person](https://schema.org/Person),
 [Order](https://schema.org/Order), [MusicEvent](https://schema.org/MusicEvent) etc.
@@ -10,7 +10,9 @@ It can be used to extract "interesting" pieces of information from a DOM, such a
 All you need to do is to add the appropriate `itemscope`, `itemtype` and `itemprop` attributes to your HTML, and this library
 will be able to extract the data.
 
-The library supports [all schema.org types](https://schema.org/docs/full.html) and returns results in [JSON-LD](https://json-ld.org/) format.
+The library supports [all schema.org types](https://schema.org/docs/full.html), and also allows custom Microdata types.
+
+The returned Mircodata uses the [JSON-LD](https://json-ld.org/) format.
 
 ## Example
 
