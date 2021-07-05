@@ -16,7 +16,7 @@ The returned Mircodata uses the [JSON-LD](https://json-ld.org/) format.
 
 ## Installation
 
-  npm install @cucumber/microdata
+    npm install @cucumber/microdata
 
 ## Example
 
