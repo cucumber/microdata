@@ -14,6 +14,10 @@ The library supports [all schema.org types](https://schema.org/docs/full.html), 
 
 The returned Mircodata uses the [JSON-LD](https://json-ld.org/) format.
 
+## Installation
+
+  npm install @cucumber/microdata
+
 ## Example
 
 Given a sample DOM:
