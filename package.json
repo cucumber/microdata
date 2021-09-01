@@ -31,7 +31,7 @@
     "nyc": "15.1.0",
     "npm-check-updates": "11.7.1",
     "prettier": "2.2.1",
-    "schema-dts": "0.8.2",
+    "schema-dts": "0.11.0",
     "ts-node": "9.1.1",
     "typescript": "4.2.3"
   }
