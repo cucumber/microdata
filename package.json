@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@types/jsdom": "16.2.8",
-    "@types/mocha": "8.2.2",
+    "@types/mocha": "8.2.3",
     "@types/node": "14.14.41",
     "@typescript-eslint/eslint-plugin": "4.22.0",
     "@typescript-eslint/parser": "4.22.0",
@@ -27,7 +27,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "3.4.1",
     "jsdom": "16.5.1",
-    "mocha": "8.3.2",
+    "mocha": "8.4.0",
     "nyc": "15.1.0",
     "npm-check-updates": "11.7.1",
     "prettier": "2.2.1",
