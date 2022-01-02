@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import { microdata, toArray } from '../src/microdata'
+import { microdata, toArray } from '../src/index.js'
 import {
   BreadcrumbList,
   CreativeWork,
@@ -137,8 +137,8 @@ describe('microdata', () => {
 
     if (typeof person === 'string') throw new Error('Expected a Person object')
 
-    assert.deepStrictEqual(person.givenName, 'Aslak')
-    assert.deepStrictEqual(person.familyName, 'Hellesøy')
+    assert.strictEqual(person.givenName, 'Aslak')
+    assert.strictEqual(person.familyName, 'Hellesøy')
   })
 
   describe('toArray', () => {

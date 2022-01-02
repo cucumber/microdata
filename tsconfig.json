@@ -1,19 +1,25 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "declaration": true,
-    "target": "es2017",
     "sourceMap": true,
     "allowJs": false,
-    "module": "commonjs",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "moduleResolution": "node",
-    "outDir": "dist",
     "downlevelIteration": true,
-    "skipLibCheck": true
-  },
-  "include": [
-    "src",
-    "test"
-  ]
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "module": "ESNext",
+    "lib": [
+      "ES6",
+      "dom"
+    ],
+    "target": "ES6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "jsx": "react"
+  }
 }
