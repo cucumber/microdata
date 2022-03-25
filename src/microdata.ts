@@ -13,7 +13,7 @@ export function microdata<T>(
   itemtype: string,
   scope: Scope,
   extractValue: ExtractValue = () => undefined
-): T {
+): T | null {
   const itemScope = scope.querySelector(`[itemscope][itemtype="${itemtype}"]`)
   return itemScope === null ? null : extract(itemScope, extractValue)
 }
