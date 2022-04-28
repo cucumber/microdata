@@ -95,7 +95,7 @@ describe('microdata', () => {
 
 function assertMicrodata(html: string, expected: any) {
   const doc = new JSDOM(html).window.document.documentElement
-  const itemScope = doc.querySelector(`[itemscope]`)
-  const itemtype = itemScope.getAttribute('itemtype')
+  const itemScope = doc.querySelector(`[itemscope]`)!
+  const itemtype = itemScope.getAttribute('itemtype')!
   assert.deepStrictEqual(microdata(itemtype, doc), expected)
 }

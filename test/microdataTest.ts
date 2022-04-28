@@ -33,7 +33,7 @@ describe('microdata', () => {
     const event: Event = microdata(
       'https://schema.org/Event',
       dom.window.document.documentElement
-    )
+    )!
 
     assert.strictEqual(event.maximumAttendeeCapacity, 35)
   })
@@ -133,7 +133,7 @@ describe('microdata', () => {
       'https://schema.org/Person',
       dom.window.document.documentElement,
       (element) => element.querySelector('.use-this')?.textContent
-    )
+    )!
 
     if (typeof person === 'string') throw new Error('Expected a Person object')
 
@@ -162,7 +162,7 @@ describe('microdata', () => {
       const breadcrumbList = microdata<BreadcrumbList>(
         'https://schema.org/BreadcrumbList',
         dom.window.document.documentElement
-      )
+      )!
 
       const dressNames = toArray(breadcrumbList.itemListElement).map(
         (e: ListItem) => e.name
@@ -184,7 +184,7 @@ describe('microdata', () => {
       const breadcrumbList = microdata<BreadcrumbList>(
         'https://schema.org/BreadcrumbList',
         dom.window.document.documentElement
-      )
+      )!
 
       const dressNames = toArray(breadcrumbList.itemListElement).map(
         (e: ListItem) => e.name
@@ -200,7 +200,7 @@ describe('microdata', () => {
       const breadcrumbList = microdata<BreadcrumbList>(
         'https://schema.org/BreadcrumbList',
         dom.window.document.documentElement
-      )
+      )!
 
       const dresses = toArray(breadcrumbList.itemListElement) as ListItem[]
       const dressNames = dresses.map((e: ListItem) => e.name)
