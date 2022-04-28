@@ -6,16 +6,16 @@ export function microdataAll<T>(
   const itemScopes = scope.querySelectorAll(
     `[itemscope][itemtype="${itemtype}"]`
   )
-  return [...itemScopes].map((scope) => extract(scope, extractValue))
+  return Array.from(itemScopes).map((scope) => extract(scope, extractValue))
 }
 
 export function microdata<T>(
   itemtype: string,
   scope: Scope,
   extractValue: ExtractValue = () => undefined
-): T {
+): T | null {
   const itemScope = scope.querySelector(`[itemscope][itemtype="${itemtype}"]`)
-  return itemScope === null ? null : extract(itemScope, extractValue)
+  return itemScope === null ? null : extract<T>(itemScope, extractValue)
 }
 
 /**
@@ -30,7 +30,7 @@ export function toArray<T>(
   return Array.isArray(o) ? o : [o]
 }
 
-function extract(scope: Element, extractValue: ExtractValue): any {
+function extract<T>(scope: Element, extractValue: ExtractValue): T {
   const itemType = scope.getAttribute('itemtype')
 
   if (itemType === null) {
@@ -38,7 +38,7 @@ function extract(scope: Element, extractValue: ExtractValue): any {
   }
 
   const microdata = { '@type': new URL(itemType).pathname.slice(1) }
-  const children = [...scope.children]
+  const children = Array.from(scope.children)
   let child: Element | undefined = undefined
 
   while ((child = children.shift())) {
@@ -50,7 +50,7 @@ function extract(scope: Element, extractValue: ExtractValue): any {
       prepend(children, child.children)
   }
 
-  return microdata
+  return microdata as unknown as T
 }
 
 function add(microdata: any, key: string, value: any) {
@@ -70,6 +70,9 @@ function value(element: Element, extractValue: ExtractValue) {
   const rawStringValue =
     extractValue(element) ||
     (attributeName ? element.getAttribute(attributeName) : element.textContent)
+  if (!rawStringValue) {
+    throw new Error(`Unable to extract value`)
+  }
   const stringValue = rawStringValue
     .trim()
     .split(/\n/)
@@ -122,5 +125,5 @@ const attributeNameByTagName: { [key: string]: string } = {
   time: 'datetime',
 }
 
-type ExtractValue = (element: Element) => string | undefined
+type ExtractValue = (element: Element) => string | undefined | null
 type Scope = Document | Element

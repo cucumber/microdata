@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import { microdata, toArray } from '../src/microdata'
+import { microdata, toArray } from '../src/index.js'
 import {
   BreadcrumbList,
   CreativeWork,
@@ -33,7 +33,7 @@ describe('microdata', () => {
     const event: Event = microdata(
       'https://schema.org/Event',
       dom.window.document.documentElement
-    )
+    )!
 
     assert.strictEqual(event.maximumAttendeeCapacity, 35)
   })
@@ -49,7 +49,7 @@ describe('microdata', () => {
     const creativeWork: CreativeWork = microdata(
       'https://schema.org/CreativeWork',
       dom.window.document.documentElement
-    )
+    )!
 
     assert.strictEqual(creativeWork.dateCreated, '2020-11-20T11:15:52.927Z')
   })
@@ -133,12 +133,12 @@ describe('microdata', () => {
       'https://schema.org/Person',
       dom.window.document.documentElement,
       (element) => element.querySelector('.use-this')?.textContent
-    )
+    )!
 
     if (typeof person === 'string') throw new Error('Expected a Person object')
 
-    assert.deepStrictEqual(person.givenName, 'Aslak')
-    assert.deepStrictEqual(person.familyName, 'Hellesøy')
+    assert.strictEqual(person.givenName, 'Aslak')
+    assert.strictEqual(person.familyName, 'Hellesøy')
   })
 
   describe('toArray', () => {
@@ -162,7 +162,7 @@ describe('microdata', () => {
       const breadcrumbList = microdata<BreadcrumbList>(
         'https://schema.org/BreadcrumbList',
         dom.window.document.documentElement
-      )
+      )!
 
       const dressNames = toArray(breadcrumbList.itemListElement).map(
         (e: ListItem) => e.name
@@ -184,7 +184,7 @@ describe('microdata', () => {
       const breadcrumbList = microdata<BreadcrumbList>(
         'https://schema.org/BreadcrumbList',
         dom.window.document.documentElement
-      )
+      )!
 
       const dressNames = toArray(breadcrumbList.itemListElement).map(
         (e: ListItem) => e.name
@@ -200,7 +200,7 @@ describe('microdata', () => {
       const breadcrumbList = microdata<BreadcrumbList>(
         'https://schema.org/BreadcrumbList',
         dom.window.document.documentElement
-      )
+      )!
 
       const dresses = toArray(breadcrumbList.itemListElement) as ListItem[]
       const dressNames = dresses.map((e: ListItem) => e.name)
