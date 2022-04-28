@@ -13,9 +13,9 @@ export function microdata<T>(
   itemtype: string,
   scope: Scope,
   extractValue: ExtractValue = () => undefined
-): T {
+): T | null {
   const itemScope = scope.querySelector(`[itemscope][itemtype="${itemtype}"]`)
-  return itemScope === null ? null : extract(itemScope, extractValue)
+  return itemScope === null ? null : extract<T>(itemScope, extractValue)
 }
 
 /**
@@ -30,7 +30,7 @@ export function toArray<T>(
   return Array.isArray(o) ? o : [o]
 }
 
-function extract(scope: Element, extractValue: ExtractValue): any {
+function extract<T>(scope: Element, extractValue: ExtractValue): T {
   const itemType = scope.getAttribute('itemtype')
 
   if (itemType === null) {
@@ -50,7 +50,7 @@ function extract(scope: Element, extractValue: ExtractValue): any {
       prepend(children, child.children)
   }
 
-  return microdata
+  return microdata as unknown as T
 }
 
 function add(microdata: any, key: string, value: any) {
