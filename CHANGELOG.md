@@ -9,8 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0] - 2022-04-28
 
+### Added
+- Package as both ESM and CommonJS module ([#66](https://github.com/cucumber/microdata/pull/66))
+
 ### Changed
-- The return type of `microdata` changed from `T` to `T | null`
+- The return type of `microdata` changed from `T` to `T | null` ([#108](https://github.com/cucumber/microdata/pull/108))
 
 ## [1.5.0]
 ### Added
