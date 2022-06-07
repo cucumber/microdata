@@ -67,10 +67,12 @@ function value(element: Element, extractValue: ExtractValue) {
     return extract(element, extractValue)
   }
   const attributeName = attributeNameByTagName[element.tagName.toLowerCase()]
-  const rawStringValue =
-    extractValue(element) ||
-    (attributeName ? element.getAttribute(attributeName) : element.textContent)
-  if (!rawStringValue) {
+  const extractedValue = extractValue(element)
+  const rawStringValue = extractedValue === undefined
+    ? (attributeName ? element.getAttribute(attributeName) : element.textContent)
+    : extractedValue
+
+  if (rawStringValue === null) {
     throw new Error(`Unable to extract value`)
   }
   const stringValue = rawStringValue

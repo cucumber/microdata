@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Allow custom value extractor to return an empty string ([#126](https://github.com/cucumber/microdata/issues/126))
+
 ## [2.0.0] - 2022-04-28
 
 ### Added
