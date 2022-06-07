@@ -151,7 +151,8 @@ describe('microdata', () => {
       'https://schema.org/Person',
       dom.window.document.documentElement,
       (element) => {
-        if (element.getAttribute('itemprop') === 'givenName') return element.getAttribute('value')
+        if (element.getAttribute('itemprop') === 'givenName')
+          return element.getAttribute('value')
         return undefined
       }
     )!
