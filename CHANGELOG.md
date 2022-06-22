@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### Changed
-- Allow custom value extractor to return an empty string ([#126](https://github.com/cucumber/microdata/issues/126))
+### Fixed
+- Allow `itemProp` to have an empty string ([#126](https://github.com/cucumber/microdata/issues/126), [#127](https://github.com/cucumber/microdata/pull/127))
 
 ## [2.0.0] - 2022-04-28
 

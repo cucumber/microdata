@@ -141,6 +141,24 @@ describe('microdata', () => {
     assert.strictEqual(person.familyName, 'Hellesøy')
   })
 
+  it('can extract properties with empty strings', () => {
+    const dom = new JSDOM(`<!DOCTYPE html>
+<div itemscope itemtype="https://schema.org/Person">
+  <div itemprop="givenName" itemtype="https://schema.org/Text"></div>
+  <span itemprop="familyName" itemtype="https://schema.org/Text">Hellesøy</span>
+</div>
+`)
+    const person = microdata<Person>(
+      'https://schema.org/Person',
+      dom.window.document.documentElement
+    )!
+
+    if (typeof person === 'string') throw new Error('Expected a Person object')
+
+    assert.strictEqual(person.givenName, '')
+    assert.strictEqual(person.familyName, 'Hellesøy')
+  })
+
   it('does not fallback to the default look up when the custom one returns an empty string', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
 <div itemscope itemtype="https://schema.org/Person">
