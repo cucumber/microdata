@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.1] - 2022-06-22
 ### Fixed
 - Allow `itemProp` to have an empty string ([#126](https://github.com/cucumber/microdata/issues/126), [#127](https://github.com/cucumber/microdata/pull/127))
 
 ## [2.0.0] - 2022-04-28
-
 ### Added
 - Package as both ESM and CommonJS module ([#66](https://github.com/cucumber/microdata/pull/66))
 
@@ -57,7 +57,8 @@ elements, such as a [CodeMirror](https://codemirror.net/) editor.
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/microdata/compare/v2.0.0...main
+[Unreleased]: https://github.com/cucumber/microdata/compare/v2.0.1...main
+[2.0.1]: https://github.com/cucumber/microdata/compare/v2.0.0...main
 [2.0.0]: https://github.com/cucumber/microdata/compare/v1.5.0...v2.0.0
 [1.5.0]: https://github.com/cucumber/microdata/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/cucumber/microdata/compare/v1.3.0...v1.4.0
