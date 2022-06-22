@@ -141,6 +141,27 @@ describe('microdata', () => {
     assert.strictEqual(person.familyName, 'Hellesøy')
   })
 
+  it('does not fallback to the default look up when the custom one returns an empty string', () => {
+    const dom = new JSDOM(`<!DOCTYPE html>
+<div itemscope itemtype="https://schema.org/Person">
+  <input type="text" itemprop="givenName" itemtype="https://schema.org/Text" value="" />
+</div>
+`)
+    const person = microdata<Person>(
+      'https://schema.org/Person',
+      dom.window.document.documentElement,
+      (element) => {
+        if (element.getAttribute('itemprop') === 'givenName')
+          return element.getAttribute('value')
+        return undefined
+      }
+    )!
+
+    if (typeof person === 'string') throw new Error('Expected a Person object')
+
+    assert.strictEqual(person.givenName, '')
+  })
+
   describe('toArray', () => {
     it('converts two children to array with two elements', () => {
       const dom = new JSDOM(`<!DOCTYPE html>
