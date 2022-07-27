@@ -115,6 +115,7 @@ function prepend(target: Element[], addition: HTMLCollection) {
   ;[].unshift.apply(target, [].slice.call(addition))
 }
 
+// https://html.spec.whatwg.org/multipage/microdata.html#values
 const attributeNameByTagName: { [key: string]: string } = {
   meta: 'content',
   audio: 'src',
@@ -122,11 +123,14 @@ const attributeNameByTagName: { [key: string]: string } = {
   iframe: 'src',
   img: 'src',
   source: 'src',
+  track: 'src',
   video: 'src',
   a: 'href',
   area: 'href',
   link: 'href',
   object: 'data',
+  data: 'value',
+  meter: 'value',
   time: 'datetime',
 }
 

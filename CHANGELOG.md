@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Support for `track`, `data` and `meter` elements
+
 ## [2.0.1] - 2022-06-22
 ### Fixed
 - Allow `itemProp` to have an empty string ([#126](https://github.com/cucumber/microdata/issues/126), [#127](https://github.com/cucumber/microdata/pull/127))

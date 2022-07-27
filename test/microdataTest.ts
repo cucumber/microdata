@@ -27,6 +27,7 @@ describe('microdata', () => {
     <div itemscope itemtype="https://schema.org/Event">
         <div>
             Maximum attendees: <span itemprop="maximumAttendeeCapacity" itemtype="https://schema.org/Integer">35</span>.
+            <meta itemprop="isAccessibleForFree" content="false"/>Ticket: pay at the entrance.
         </div>
     </div>
     `)
@@ -36,6 +37,7 @@ describe('microdata', () => {
     )!
 
     assert.strictEqual(event.maximumAttendeeCapacity, 35)
+    assert.strictEqual(event.isAccessibleForFree, false)
   })
 
   it('converts objects with dates', () => {
