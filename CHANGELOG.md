@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### Fixed
-- Properties with `itemtype="http://schema.org/Boolean"` are parsed correctly. 
-
+## [2.1.0] - 2022-07-27
 ### Added
 - Support for `track`, `data` and `meter` elements
+
+### Fixed
+- Properties with `itemtype="http://schema.org/Boolean"` are parsed correctly.
 
 ## [2.0.1] - 2022-06-22
 ### Fixed
@@ -63,7 +64,8 @@ elements, such as a [CodeMirror](https://codemirror.net/) editor.
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/microdata/compare/v2.0.1...main
+[Unreleased]: https://github.com/cucumber/microdata/compare/v2.1.0...main
+[2.1.0]: https://github.com/cucumber/microdata/compare/v2.0.1...main
 [2.0.1]: https://github.com/cucumber/microdata/compare/v2.0.0...main
 [2.0.0]: https://github.com/cucumber/microdata/compare/v1.5.0...v2.0.0
 [1.5.0]: https://github.com/cucumber/microdata/compare/v1.4.0...v1.5.0
