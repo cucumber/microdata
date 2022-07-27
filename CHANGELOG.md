@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Properties with `itemtype="http://schema.org/Boolean"` are parsed correctly. 
+
 ### Added
 - Support for `track`, `data` and `meter` elements
 

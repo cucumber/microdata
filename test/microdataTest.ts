@@ -22,12 +22,12 @@ type TreeList = {
 }
 
 describe('microdata', () => {
-  it('converts primitive types', () => {
+  it.only('converts primitive types', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
     <div itemscope itemtype="https://schema.org/Event">
         <div>
             Maximum attendees: <span itemprop="maximumAttendeeCapacity" itemtype="https://schema.org/Integer">35</span>.
-            <meta itemprop="isAccessibleForFree" content="false"/>Ticket: pay at the entrance.
+            <meta itemprop="isAccessibleForFree" itemtype="https://schema.org/Boolean" content="false"/>Ticket: pay at the entrance.
         </div>
     </div>
     `)

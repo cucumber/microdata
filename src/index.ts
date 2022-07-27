@@ -101,9 +101,11 @@ function value(element: Element, extractValue: ExtractValue) {
     case 'https://schema.org/Integer':
       return Number(stringValue)
     case 'https://schema.org/Boolean':
+      return stringValue === 'true'
     case 'https://schema.org/False':
+      return false
     case 'https://schema.org/True':
-      return Boolean(stringValue)
+      return true
     default:
       throw new Error(
         `Unable to extract value. Change itemtype to a primitive type or add itemscope on element ${element.outerHTML}`
