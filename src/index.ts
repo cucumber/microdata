@@ -27,7 +27,7 @@ export function toArray<T>(
   o: T | readonly T[] | undefined | null
 ): readonly T[] {
   if (o === null || o === undefined) return []
-  return Array.isArray(o) ? o : [o]
+  return Array.isArray(o) ? o : [o as T]
 }
 
 function extract<T>(scope: Element, extractValue: ExtractValue): T {
