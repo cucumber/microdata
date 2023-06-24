@@ -43,7 +43,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "jsdom": "21.1.2",
     "mocha": "10.2.0",
-    "npm-check-updates": "16.10.12",
+    "npm-check-updates": "16.10.13",
     "prettier": "2.8.8",
     "schema-dts": "1.1.2",
     "shx": "0.3.4",
