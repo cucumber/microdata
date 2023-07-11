@@ -44,7 +44,7 @@
     "jsdom": "21.1.2",
     "mocha": "10.2.0",
     "npm-check-updates": "16.10.15",
-    "prettier": "2.8.8",
+    "prettier": "3.0.0",
     "schema-dts": "1.1.2",
     "shx": "0.3.4",
     "ts-node": "10.9.1",
