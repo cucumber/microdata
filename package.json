@@ -28,8 +28,7 @@
     "test:cjs": "npm run build:cjs && mocha --no-config dist/cjs/test",
     "prepublishOnly": "npm run build",
     "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
-    "eslint": "eslint --ext ts --max-warnings 0 src test",
-    "upgrade": "npm-check-updates --upgrade"
+    "eslint": "eslint --ext ts --max-warnings 0 src test"
   },
   "devDependencies": {
     "@types/jsdom": "21.1.7",
