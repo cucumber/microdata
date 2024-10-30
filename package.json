@@ -41,7 +41,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "5.2.1",
     "jsdom": "25.0.1",
-    "mocha": "10.8.1",
+    "mocha": "10.8.2",
     "prettier": "3.3.3",
     "schema-dts": "1.1.2",
     "shx": "0.3.4",
