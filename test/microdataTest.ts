@@ -182,25 +182,31 @@ describe('microdata', () => {
     assert.strictEqual(person.givenName, '')
   })
 
-  it('can extract booleans', () => {
+  it('can extract boolean value with extractValue', () => {
     const dom = new JSDOM(`<!DOCTYPE html>
 <div itemscope itemtype="https://schema.org/Book">
   <div itemprop="abstract" itemtype="https://schema.org/Text">
-    A quick explanation about the bool
+    A quick explanation about the book
   </div>
-  <span itemprop="abridged" itemtype="https://schema.org/Boolean">Yes</span>
+  <span itemprop="abridged" itemtype="https://schema.org/Boolean">Y</span>
 </div>
 `);
 
-    const person = microdata(
-      'https://schema.org/Person',
+    const book = microdata(
+      'https://schema.org/Book',
       dom.window.document.documentElement,
       (element) => {
         if (element.getAttribute('itemtype') === 'https://schema.org/Boolean') {
-          return element.textContent === 'Yes';
+          return element.textContent === 'Y';
         }
       },
-    )!
+    )
+
+    assert.deepStrictEqual(book, {
+      '@type': 'Book',
+      abstract: 'A quick explanation about the book',
+      abridged: true
+    })
   })
 
   describe('toArray', () => {
