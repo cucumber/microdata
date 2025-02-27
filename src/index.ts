@@ -80,7 +80,7 @@ function value(element: Element, extractValue: ExtractValue) {
   }
 
   if (typeof rawValue === 'boolean') {
-    return  rawValue;
+    return rawValue
   }
 
   const stringValue = rawValue

@@ -190,22 +190,22 @@ describe('microdata', () => {
   </div>
   <span itemprop="abridged" itemtype="https://schema.org/Boolean">Y</span>
 </div>
-`);
+`)
 
     const book = microdata(
       'https://schema.org/Book',
       dom.window.document.documentElement,
       (element) => {
         if (element.getAttribute('itemtype') === 'https://schema.org/Boolean') {
-          return element.textContent === 'Y';
+          return element.textContent === 'Y'
         }
-      },
+      }
     )
 
     assert.deepStrictEqual(book, {
       '@type': 'Book',
       abstract: 'A quick explanation about the book',
-      abridged: true
+      abridged: true,
     })
   })
 
