@@ -182,6 +182,27 @@ describe('microdata', () => {
     assert.strictEqual(person.givenName, '')
   })
 
+  it('can extract booleans', () => {
+    const dom = new JSDOM(`<!DOCTYPE html>
+<div itemscope itemtype="https://schema.org/Book">
+  <div itemprop="abstract" itemtype="https://schema.org/Text">
+    A quick explanation about the bool
+  </div>
+  <span itemprop="abridged" itemtype="https://schema.org/Boolean">Yes</span>
+</div>
+`);
+
+    const person = microdata(
+      'https://schema.org/Person',
+      dom.window.document.documentElement,
+      (element) => {
+        if (element.getAttribute('itemtype') === 'https://schema.org/Boolean') {
+          return element.textContent === 'Yes';
+        }
+      },
+    )!
+  })
+
   describe('toArray', () => {
     it('converts two children to array with two elements', () => {
       const dom = new JSDOM(`<!DOCTYPE html>
@@ -233,7 +254,7 @@ describe('microdata', () => {
       assert.deepStrictEqual(dressNames, ['Dresses'])
     })
 
-    it('converts no childred to array with zero elements', () => {
+    it('converts no children to array with zero elements', () => {
       const dom = new JSDOM(`<!DOCTYPE html>
 <ol itemscope itemtype="https://schema.org/BreadcrumbList">
 </ol>

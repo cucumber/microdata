@@ -5,7 +5,7 @@ import assert from 'assert'
 
 describe('microdata', () => {
   context(
-    'acceptace tests from https://github.com/schemaorg/schemaorg/blob/master/data/examples.txt',
+    'acceptance tests from https://github.com/schemaorg/schemaorg/blob/master/data/examples.txt',
     () => {
       it('makes a https://schema.org/Person', () => {
         const html = `<!DOCTYPE html>
