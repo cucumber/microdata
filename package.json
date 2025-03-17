@@ -44,7 +44,7 @@
     "mocha": "11.1.0",
     "prettier": "3.5.3",
     "schema-dts": "1.1.5",
-    "shx": "0.3.4",
+    "shx": "0.4.0",
     "ts-node": "10.9.2",
     "typescript": "5.8.2"
   }
