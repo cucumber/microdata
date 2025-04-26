@@ -68,17 +68,22 @@ function value(element: Element, extractValue: ExtractValue) {
   }
   const attributeName = attributeNameByTagName[element.tagName.toLowerCase()]
   const extractedValue = extractValue(element)
-  const rawStringValue =
+  const rawValue =
     extractedValue === undefined
       ? attributeName
         ? element.getAttribute(attributeName)
         : element.textContent
       : extractedValue
 
-  if (rawStringValue === null) {
+  if (rawValue === null) {
     throw new Error(`Unable to extract value`)
   }
-  const stringValue = rawStringValue
+
+  if (typeof rawValue === 'boolean') {
+    return rawValue
+  }
+
+  const stringValue = rawValue
     .trim()
     .split(/\n/)
     .map((s) => s.trim())
@@ -136,5 +141,5 @@ const attributeNameByTagName: { [key: string]: string } = {
   time: 'datetime',
 }
 
-type ExtractValue = (element: Element) => string | undefined | null
+type ExtractValue = (element: Element) => string | boolean | undefined | null
 type Scope = Document | Element
